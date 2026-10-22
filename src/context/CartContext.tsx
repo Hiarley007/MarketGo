@@ -35,11 +35,7 @@ interface CartContextValue {
     product: CartProduct,
     quantity?: number,
   ) => 'added' | 'conflict';
-  replaceWith: (
-    store: CartStore,
-    product: CartProduct,
-    quantity?: number,
-  ) => void;
+  replaceWith: (store: CartStore, product: CartProduct, quantity?: number) => void;
   setCart: (cart: Cart) => void;
   changeQuantity: (productId: string, quantity: number) => void;
   remove: (productId: string) => void;

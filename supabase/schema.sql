@@ -1,8 +1,11 @@
--- MarketGo: esquema do banco (execute no SQL Editor do Supabase)
+-- MarketGo: esquema do banco (versão reexecutável)
+-- Pode ser executado várias vezes no SQL Editor do Supabase sem dar erro
+-- e sem apagar dados: tabelas e índices só são criados se não existirem,
+-- políticas são recriadas e funções são substituídas.
 
 -- 1) Catálogo -----------------------------------------------------------
 
-create table public.stores (
+create table if not exists public.stores (
   id uuid primary key default gen_random_uuid(),
   name text not null,
   category text not null
@@ -18,7 +21,7 @@ create table public.stores (
   created_at timestamptz not null default now()
 );
 
-create table public.products (
+create table if not exists public.products (
   id uuid primary key default gen_random_uuid(),
   store_id uuid not null references public.stores (id) on delete cascade,
   section text not null,
@@ -29,13 +32,14 @@ create table public.products (
   is_active boolean not null default true
 );
 
-create index products_store_idx on public.products (store_id, section, name);
+create index if not exists products_store_idx
+  on public.products (store_id, section, name);
 
 -- 2) Pedidos ------------------------------------------------------------
 -- Os textos da loja e dos itens são copiados no momento da compra ("snapshot"):
 -- se o preço mudar depois, o pedido antigo continua igual.
 
-create table public.orders (
+create table if not exists public.orders (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null default auth.uid()
     references auth.users (id) on delete cascade,
@@ -56,9 +60,10 @@ create table public.orders (
   updated_at timestamptz not null default now()
 );
 
-create index orders_user_idx on public.orders (user_id, created_at desc);
+create index if not exists orders_user_idx
+  on public.orders (user_id, created_at desc);
 
-create table public.order_items (
+create table if not exists public.order_items (
   id uuid primary key default gen_random_uuid(),
   order_id uuid not null references public.orders (id) on delete cascade,
   product_id uuid references public.products (id) on delete set null,
@@ -69,7 +74,8 @@ create table public.order_items (
   total_price numeric(10, 2) not null check (total_price > 0)
 );
 
-create index order_items_order_idx on public.order_items (order_id);
+create index if not exists order_items_order_idx
+  on public.order_items (order_id);
 
 -- 3) Segurança: Row Level Security --------------------------------------
 
@@ -78,16 +84,20 @@ alter table public.products enable row level security;
 alter table public.orders enable row level security;
 alter table public.order_items enable row level security;
 
+drop policy if exists "Lojas: leitura para usuários logados" on public.stores;
 create policy "Lojas: leitura para usuários logados"
   on public.stores for select to authenticated using (true);
 
+drop policy if exists "Produtos: leitura dos ativos" on public.products;
 create policy "Produtos: leitura dos ativos"
   on public.products for select to authenticated using (is_active);
 
+drop policy if exists "Pedidos: ler os próprios" on public.orders;
 create policy "Pedidos: ler os próprios"
   on public.orders for select to authenticated
   using ((select auth.uid()) = user_id);
 
+drop policy if exists "Itens: ler os dos próprios pedidos" on public.order_items;
 create policy "Itens: ler os dos próprios pedidos"
   on public.order_items for select to authenticated
   using (

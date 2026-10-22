@@ -10,9 +10,7 @@ export function StatusPill({ status }: { status: OrderStatus }) {
 
   return (
     <View style={[styles.pill, { backgroundColor: bg }]}>
-      <Text style={[styles.text, { color: fg }]}>
-        {ORDER_STATUS_LABEL[status]}
-      </Text>
+      <Text style={[styles.text, { color: fg }]}>{ORDER_STATUS_LABEL[status]}</Text>
     </View>
   );
 }

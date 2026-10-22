@@ -3,10 +3,7 @@ import type { CreateOrderInput, Order } from '@/types';
 
 type LastAddress = Pick<
   Order,
-  | 'address_street'
-  | 'address_number'
-  | 'address_neighborhood'
-  | 'address_complement'
+  'address_street' | 'address_number' | 'address_neighborhood' | 'address_complement'
 >;
 
 // Criar
@@ -56,9 +53,7 @@ export async function getOrder(id: string): Promise<Order> {
 export async function getLastAddress(): Promise<LastAddress | null> {
   const { data, error } = await supabase
     .from('orders')
-    .select(
-      'address_street, address_number, address_neighborhood, address_complement',
-    )
+    .select('address_street, address_number, address_neighborhood, address_complement')
     .order('created_at', { ascending: false })
     .limit(1)
     .maybeSingle();

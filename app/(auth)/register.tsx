@@ -31,11 +31,7 @@ export default function RegisterScreen() {
   const onSubmit = handleSubmit(async ({ name, email, password }) => {
     setFormError(null);
     try {
-      const { needsConfirmation } = await signUp(
-        name.trim(),
-        email.trim(),
-        password,
-      );
+      const { needsConfirmation } = await signUp(name.trim(), email.trim(), password);
 
       if (needsConfirmation) {
         Alert.alert(
@@ -55,12 +51,7 @@ export default function RegisterScreen() {
       <Text style={styles.title}>Criar conta</Text>
       <Text style={styles.subtitle}>Leva menos de um minuto.</Text>
 
-      <FormInput
-        control={control}
-        name="name"
-        label="Nome"
-        placeholder="Seu nome"
-      />
+      <FormInput control={control} name="name" label="Nome" placeholder="Seu nome" />
       <FormInput
         control={control}
         name="email"

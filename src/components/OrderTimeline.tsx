@@ -18,33 +18,21 @@ export function OrderTimeline({ status }: { status: OrderStatus }) {
         const current = step.state === 'current';
         const pending = step.state === 'pending';
         const isLast = index === steps.length - 1;
-        const color = done
-          ? colors.income
-          : current
-            ? colors.primary
-            : colors.border;
+        const color = done ? colors.income : current ? colors.primary : colors.border;
 
         return (
           <View key={step.status} style={styles.row}>
             <View style={styles.rail}>
               <View style={[styles.dot, { backgroundColor: color }]}>
-                {done ? (
-                  <Ionicons name="checkmark" size={14} color="#FFFFFF" />
-                ) : null}
+                {done ? <Ionicons name="checkmark" size={14} color="#FFFFFF" /> : null}
               </View>
               {!isLast ? (
-                <View
-                  style={[styles.line, done && { backgroundColor: colors.income }]}
-                />
+                <View style={[styles.line, done && { backgroundColor: colors.income }]} />
               ) : null}
             </View>
 
             <Text
-              style={[
-                styles.label,
-                current && styles.current,
-                pending && styles.pending,
-              ]}
+              style={[styles.label, current && styles.current, pending && styles.pending]}
             >
               {ORDER_STATUS_LABEL[step.status]}
             </Text>

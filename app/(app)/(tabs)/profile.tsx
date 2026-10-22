@@ -55,8 +55,8 @@ export default function ProfileScreen() {
       <Card>
         <Text style={styles.infoTitle}>Sobre este app</Text>
         <Text style={styles.infoText}>
-          Projeto de estudo. Os pagamentos são simulados e nenhum pedido é
-          entregue de verdade. O carrinho fica salvo no seu aparelho.
+          Projeto de estudo. Os pagamentos são simulados e nenhum pedido é entregue de
+          verdade. O carrinho fica salvo no seu aparelho.
         </Text>
       </Card>
 

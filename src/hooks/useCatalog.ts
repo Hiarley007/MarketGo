@@ -1,10 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import {
-  getProduct,
-  getStore,
-  listProducts,
-  listStores,
-} from '@/services/stores';
+import { getProduct, getStore, listProducts, listStores } from '@/services/stores';
 
 const STALE_TIME = 60_000;
 

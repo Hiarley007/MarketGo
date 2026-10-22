@@ -27,11 +27,7 @@ export function ErrorState({ message, onRetry }: ErrorStateProps) {
       <Ionicons name="cloud-offline" size={48} color={colors.muted} />
       <Text style={styles.title}>Algo deu errado</Text>
       <Text style={styles.text}>{message}</Text>
-      <Button
-        title="Tentar novamente"
-        onPress={onRetry}
-        style={styles.button}
-      />
+      <Button title="Tentar novamente" onPress={onRetry} style={styles.button} />
     </View>
   );
 }
@@ -44,11 +40,7 @@ interface EmptyStateProps {
   message: string;
 }
 
-export function EmptyState({
-  icon = 'wallet-outline',
-  title,
-  message,
-}: EmptyStateProps) {
+export function EmptyState({ icon = 'wallet-outline', title, message }: EmptyStateProps) {
   return (
     <View style={styles.center}>
       <Ionicons name={icon} size={48} color={colors.muted} />
