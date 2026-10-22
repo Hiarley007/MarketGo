@@ -1,5 +1,5 @@
 import Constants from 'expo-constants';
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { Alert, Platform, StyleSheet, Text, View } from 'react-native';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { Screen } from '@/components/Screen';
@@ -13,15 +13,30 @@ export default function ProfileScreen() {
   const { user, signOut } = useAuth();
   const name = String(user?.user_metadata?.full_name ?? 'Usuário');
 
+  async function doSignOut() {
+    try {
+      await signOut();
+    } catch (e) {
+      if (Platform.OS === 'web') {
+        window.alert(friendlyError(e));
+      } else {
+        Alert.alert('Erro', friendlyError(e));
+      }
+    }
+  }
+
   function confirmSignOut() {
+    // No web, Alert.alert com botões não funciona: usamos window.confirm
+    if (Platform.OS === 'web') {
+      if (window.confirm('Deseja encerrar a sessão?')) {
+        doSignOut();
+      }
+      return;
+    }
+
     Alert.alert('Sair', 'Deseja encerrar a sessão?', [
       { text: 'Cancelar', style: 'cancel' },
-      {
-        text: 'Sair',
-        style: 'destructive',
-        onPress: () =>
-          signOut().catch((e) => Alert.alert('Erro', friendlyError(e))),
-      },
+      { text: 'Sair', style: 'destructive', onPress: doSignOut },
     ]);
   }
 
