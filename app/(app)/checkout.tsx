@@ -1,9 +1,10 @@
 import { Text, View } from 'react-native';
 
-export default function Home() {
+// Tela provisória, até a versão final ficar pronta.
+export default function Placeholder() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>MarketGo funcionando!</Text>
+      <Text>Em construção</Text>
     </View>
   );
 }
