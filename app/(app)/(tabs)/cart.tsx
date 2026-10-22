@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router';
-import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
@@ -32,9 +32,19 @@ export default function CartScreen() {
   }
 
   function confirmClear() {
+    const clearNow = () => clear();
+
+    // Alert.alert com botões não abre na web, então a ação nunca rodava.
+    if (Platform.OS === 'web') {
+      if (window.confirm('Esvaziar carrinho?\n\nTodos os itens serão removidos.')) {
+        clearNow();
+      }
+      return;
+    }
+
     Alert.alert('Esvaziar carrinho', 'Todos os itens serão removidos.', [
       { text: 'Cancelar', style: 'cancel' },
-      { text: 'Esvaziar', style: 'destructive', onPress: clear },
+      { text: 'Esvaziar', style: 'destructive', onPress: clearNow },
     ]);
   }
 

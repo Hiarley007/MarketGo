@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors, radius, spacing } from '@/theme';
 import type { Product } from '@/types';
 import { formatMoney } from '@/utils/money';
@@ -25,7 +25,10 @@ export function ProductRow({
 }: ProductRowProps) {
   return (
     <Pressable
-      accessibilityRole="button"
+      // Na web, accessibilityRole="button" vira um <button> real no DOM.
+      // Como o botão "+" é filho desta linha, isso gerava <button> dentro de <button>.
+      // No celular o papel de botão continua ativo.
+      accessibilityRole={Platform.OS === 'web' ? undefined : 'button'}
       onPress={onPress}
       style={({ pressed }) => [styles.row, pressed && styles.pressed]}
     >
