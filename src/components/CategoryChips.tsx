@@ -30,9 +30,7 @@ export function CategoryChips({ value, onChange }: CategoryChipsProps) {
             style={[styles.chip, selected && styles.chipSelected]}
           >
             <Text style={styles.emoji}>{c.emoji}</Text>
-            <Text style={[styles.label, selected && styles.labelSelected]}>
-              {c.name}
-            </Text>
+            <Text style={[styles.label, selected && styles.labelSelected]}>{c.name}</Text>
           </Pressable>
         );
       })}

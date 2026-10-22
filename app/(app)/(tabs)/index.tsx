@@ -73,8 +73,8 @@ export default function StoresScreen() {
         )}
         keyboardShouldPersistTaps="handled"
         refreshControl={
-        <RefreshControl refreshing={isRefetching} onRefresh={() => void refetch()} />
-}
+          <RefreshControl refreshing={isRefetching} onRefresh={() => void refetch()} />
+        }
       />
     </Screen>
   );

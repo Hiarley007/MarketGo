@@ -29,10 +29,7 @@ export function FormInput<T extends FieldValues>({
     <Controller
       control={control}
       name={name}
-      render={({
-        field: { value, onChange, onBlur },
-        fieldState: { error },
-      }) => (
+      render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
         <Input
           {...rest}
           label={label}

@@ -53,9 +53,7 @@ export function Button({
       {loading ? (
         <ActivityIndicator color={labelColor[variant]} />
       ) : (
-        <Text style={[styles.label, { color: labelColor[variant] }]}>
-          {title}
-        </Text>
+        <Text style={[styles.label, { color: labelColor[variant] }]}>{title}</Text>
       )}
     </Pressable>
   );

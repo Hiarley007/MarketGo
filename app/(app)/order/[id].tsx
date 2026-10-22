@@ -61,7 +61,10 @@ export default function OrderScreen() {
     reorder.mutate(order!, {
       onSuccess: ({ cart, skipped }) => {
         if (cart.items.length === 0) {
-          notify('Itens indisponíveis', 'Nenhum item deste pedido está disponível agora.');
+          notify(
+            'Itens indisponíveis',
+            'Nenhum item deste pedido está disponível agora.',
+          );
           return;
         }
         setCart(cart);

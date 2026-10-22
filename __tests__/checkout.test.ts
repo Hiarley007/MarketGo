@@ -29,13 +29,13 @@ describe('makeCheckoutSchema', () => {
 
   describe('endereço', () => {
     it('exige rua, número e bairro', () => {
-      expect(
-        errorsOf({ ...valid, street: 'ab', number: '', neighborhood: ' ' }),
-      ).toEqual([
-        'street: Informe a rua',
-        'number: Informe o número',
-        'neighborhood: Informe o bairro',
-      ]);
+      expect(errorsOf({ ...valid, street: 'ab', number: '', neighborhood: ' ' })).toEqual(
+        [
+          'street: Informe a rua',
+          'number: Informe o número',
+          'neighborhood: Informe o bairro',
+        ],
+      );
     });
   });
 
